@@ -1,15 +1,12 @@
-from distutils.sysconfig import customize_compiler
-
-
 class TrackOrders:
     def __init__(self):
         self.orders = []
 
     def __len__(self):
-        len(self.orders)
+        return len(self.orders)
 
     def add_new_order(self, costumer, order, day):
-        self.orders.append([costumer, order, day])
+        return self.orders.append([costumer, order, day])
 
     def get_dishes_per_customer(self, customer):
         list_of_orders = self.orders
@@ -42,8 +39,8 @@ class TrackOrders:
         return dish_name
 
     def get_never_ordered_per_costumer(self, costumer):
-        menu = self.get_menu(self)
-        list_of_orders = self.get_dishes_per_customer(self, costumer)
+        menu = set(self.get_menu())
+        list_of_orders = self.get_dishes_per_customer(costumer)
         dishes_never_ordered = menu.difference(list_of_orders)
         return dishes_never_ordered
 
@@ -72,28 +69,36 @@ class TrackOrders:
         return customer_orders_per_day
 
     def get_busiest_day_qtd(self):
-        customer_orders_per_day = self.get_customer_orders_per_day(self)
+        customer_orders_per_day = self.get_customer_orders_per_day()
         most_orders = 0
-        for day, qtd in customer_orders_per_day:
+        for day, qtd in customer_orders_per_day.items():
             if qtd > most_orders:
                 most_orders = qtd
         return most_orders
 
+    def get_order_frequency_per_costumer(self, costumer, order):
+        dishes_per_customer = self.get_dishes_per_customer(costumer)
+        frequency = 0
+        for dish, qtd in dishes_per_customer:
+            if dish == order:
+                frequency = qtd
+        return frequency
+
     def get_busiest_day(self):
-        customer_orders_per_day = self.get_customer_orders_per_day(self)
+        customer_orders_per_day = self.get_customer_orders_per_day()
         most_orders = 0
         busiest_day = ''
-        for day_of_week, qtd in customer_orders_per_day:
+        for day_of_week, qtd in customer_orders_per_day.items():
             if qtd > most_orders:
                 most_orders = qtd
                 busiest_day = day_of_week
         return busiest_day
 
     def get_least_busy_day(self):
-        customer_orders_per_day = self.get_customer_orders_per_day(self)
-        most_orders = self.get_busiest_day_qtd(self)
+        customer_orders_per_day = self.get_customer_orders_per_day()
+        most_orders = self.get_busiest_day_qtd()
         least_busy_day = ''
-        for day, qtd in customer_orders_per_day:
+        for day, qtd in customer_orders_per_day.items():
             if qtd < most_orders:
                 most_orders = qtd
                 least_busy_day = day
