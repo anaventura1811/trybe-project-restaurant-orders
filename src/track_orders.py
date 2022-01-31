@@ -88,7 +88,8 @@ class TrackOrders:
         customer_orders_per_day = self.get_customer_orders_per_day()
         most_orders = 0
         busiest_day = ''
-        for day_of_week, qtd in customer_orders_per_day.items():
+        customer_orders = customer_orders_per_day.items()
+        for day_of_week, qtd in customer_orders:
             if qtd > most_orders:
                 most_orders = qtd
                 busiest_day = day_of_week
@@ -97,8 +98,9 @@ class TrackOrders:
     def get_least_busy_day(self):
         customer_orders_per_day = self.get_customer_orders_per_day()
         most_orders = self.get_busiest_day_qtd()
+        customer_orders = customer_orders_per_day.items()
         least_busy_day = ''
-        for day, qtd in customer_orders_per_day.items():
+        for day, qtd in customer_orders:
             if qtd < most_orders:
                 most_orders = qtd
                 least_busy_day = day
