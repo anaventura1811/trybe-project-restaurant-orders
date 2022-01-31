@@ -79,3 +79,5 @@ def never_been_at_restaurant(client_name: str, path: str):
     set_list_of_days = set(list_of_days)
     set_days_at_restaurant = set(list_of_days_at_restaurant)
     return set_list_of_days.difference(set_days_at_restaurant)
+
+# Source: https://docs.python.org/3/library/csv.html#csv.reader
