@@ -1,3 +1,6 @@
+from distutils.sysconfig import customize_compiler
+
+
 class TrackOrders:
     def __init__(self):
         self.orders = []
@@ -58,8 +61,40 @@ class TrackOrders:
         set_days_at_restaurant = set(list_of_days_at_restaurant)
         return set_list_week_days.difference(set_days_at_restaurant)
 
+    def get_customer_orders_per_day(self):
+        customer_orders_per_day = {}
+        list_of_orders = self.orders
+        for _customer, _order, day in list_of_orders:
+            if day not in customer_orders_per_day:
+                customer_orders_per_day[day] = 1
+            else:
+                customer_orders_per_day[day] += 1
+        return customer_orders_per_day
+
+    def get_busiest_day_qtd(self):
+        customer_orders_per_day = self.get_customer_orders_per_day(self)
+        most_orders = 0
+        for day, qtd in customer_orders_per_day:
+            if qtd > most_orders:
+                most_orders = qtd
+        return most_orders
+
     def get_busiest_day(self):
-        pass
+        customer_orders_per_day = self.get_customer_orders_per_day(self)
+        most_orders = 0
+        busiest_day = ''
+        for day_of_week, qtd in customer_orders_per_day:
+            if qtd > most_orders:
+                most_orders = qtd
+                busiest_day = day_of_week
+        return busiest_day
 
     def get_least_busy_day(self):
-        pass
+        customer_orders_per_day = self.get_customer_orders_per_day(self)
+        most_orders = self.get_busiest_day_qtd(self)
+        least_busy_day = ''
+        for day, qtd in customer_orders_per_day:
+            if qtd < most_orders:
+                most_orders = qtd
+                least_busy_day = day
+        return least_busy_day
