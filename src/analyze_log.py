@@ -1,7 +1,9 @@
-from .utils.restaurant_utils import get_most_ordered_dish_by_client
-from .utils.restaurant_utils import how_often_dish_was_ordered
-from .utils.restaurant_utils import never_been_at_restaurant
-from .utils.restaurant_utils import list_never_ordered_dishes
+from .utils.restaurant_utils import (
+    get_most_ordered_dish_by_client,
+    how_often_dish_was_ordered,
+    never_been_at_restaurant,
+    list_never_ordered_dishes
+    )
 
 
 def analyze_log(path_to_file):
